@@ -89,9 +89,28 @@ class Player extends React.Component {
                 {this.props.nowPlaying.name}
               </div>
             </div>
-            <div className="d-none d-lg-flex loved-track mr-3">
-              <FontAwesomeIcon icon={faHeart} />
-            </div>
+            {this.state.playing &&
+              (this.state[this.props.nowPlaying.id] === true ? (
+                <div
+                  className="like-icon"
+                  onClick={() => {
+                    this.props.removeFromFav(this.props.nowPlaying);
+                    this.setState({ [this.props.nowPlaying.id]: false });
+                  }}
+                >
+                  <IoIosHeart className="heart" />
+                </div>
+              ) : (
+                <div
+                  className="like-icon"
+                  onClick={() => {
+                    this.props.addToFav(this.props.nowPlaying);
+                    this.setState({ [this.props.nowPlaying.id]: true });
+                  }}
+                >
+                  <IoIosHeartEmpty className="heart" />
+                </div>
+              ))}
             <FontAwesomeIcon
               icon={faChalkboard}
               className="d-none d-lg-block"

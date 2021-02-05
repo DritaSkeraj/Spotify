@@ -12,6 +12,12 @@ const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => ({
   addToPlayList: (payload) =>
     dispatch({ type: "ADD_SONG_TO_PLAYLIST", payload }),
+
+  play: (song) =>
+    dispatch({
+      type: "PLAY",
+      payload: song,
+    }),
 });
 
 class AlbumPlaylist extends Component {
@@ -34,6 +40,10 @@ class AlbumPlaylist extends Component {
       this.handleShow();
       this.setState({ selectedSong: id });
     }
+  };
+
+  handlePlay = (song) => {
+    this.props.play(song);
   };
 
   handlePlaylistSelect = (e) => {
@@ -154,7 +164,16 @@ class AlbumPlaylist extends Component {
                   />
                 ) : (
                   this.state.album.tracks.data.map((track, key) => (
-                    <tr onclick="printInnerText(this)">
+                    <tr
+                      onclick="printInnerText(this)"
+                      onClick={() =>
+                        this.handlePlay({
+                          ...track,
+                          ...this.state.album,
+                          ...this.state.album.artist,
+                        })
+                      }
+                    >
                       <th
                         scope="row"
                         style={{

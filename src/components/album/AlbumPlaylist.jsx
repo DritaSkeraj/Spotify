@@ -62,7 +62,7 @@ class AlbumPlaylist extends Component {
 
   componentDidMount = () => {
     this.fetchAlbum(this.props.albumId);
-    if (this.props.playlists > 0) {
+    if (this.props.playlists.length > 0) {
       this.setState({ selectedPlaylist: this.props.playlists[0].name });
     }
   };
@@ -210,7 +210,8 @@ class AlbumPlaylist extends Component {
                       <td>
                         <AiOutlinePlusSquare
                           onClick={() => this.handleAddToPlaylist(track.id)}
-                          style={{'marginTop': '1em'}}/>
+                          style={{ marginTop: "1em" }}
+                        />
                       </td>
                       <td style={{ verticalAlign: "middle" }}>
                         <p className="group">{track.rank}</p>

@@ -110,7 +110,7 @@ const AsideMenu = (props) => {
         </div>
         <div className="menu d-flex column justify-content-start align-items-center">
           <div className="col">
-            <Link to="/">
+            <Link to="/playList">
               {" "}
               <FontAwesomeIcon icon={faBook} className="mr-2" /> Your library
             </Link>

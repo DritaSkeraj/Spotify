@@ -2,6 +2,8 @@ import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import favReducer from "../reducer/favs";
 import userReducer from "../reducer/user";
 import thunk from "redux-thunk";
+import playListReducer from "../reducer/playlists";
+import selectedPlaylistReducer from "../reducer/selectedPlaylist";
 
 const composedEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -15,9 +17,16 @@ const initialState = {
     id: null,
     picture: null,
   },
+  playlists: [],
+  selectedPlaylist: {},
 };
 
-const bigReducer = combineReducers({ fav: favReducer, user: userReducer }); //associates reducers to state values
+const bigReducer = combineReducers({
+  fav: favReducer,
+  user: userReducer,
+  playlists: playListReducer,
+  selectedPlaylist: selectedPlaylistReducer,
+}); //associates reducers to state values
 
 export default function configureStore() {
   return createStore(

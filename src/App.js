@@ -1,15 +1,16 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import './App.css';
 
-import AsideMenu from "./components/AsideMenu";
-import Player from "./components/Player";
-import Login from "./components/Login";
-import HomeContent from "./components/HomeContent";
+import AsideMenu from './components/AsideMenu';
+import Player from './components/Player';
+import Login from './components/Login';
+import HomeContent from './components/HomeContent';
 
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import AlbumPage from "./components/album/AlbumPage";
 import ArtistPage from "./components/artist/ArtistPage";
 import SearchPage from "./components/search/SearchPage";
+import PlayList from "./components/playlists/PlayList";
 
 function App() {
   return (
@@ -21,8 +22,12 @@ function App() {
       <Route path="/albumPage/:album" exact component={AlbumPage} />
       <Route path="/artistPage/:artist" exact component={ArtistPage} />
       <Route path="/search" exact component={SearchPage} />
+      <Route path="/playList" exact component={PlayList} />
+
     </Router>
   );
 }
 
 export default App;
+
+

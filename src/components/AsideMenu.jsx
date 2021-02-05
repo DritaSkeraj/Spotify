@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -9,79 +9,8 @@ import {
 import "../styles/styles.css";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
-import { connect } from "react-redux";
 
-const mapStateToProps = (state) => state;
-
-const mapDispatchToProps = (dispatch) => ({
-  setUser: (user) =>
-    dispatch({
-      type: "SET_USER",
-      payload: user,
-    }),
-  unsetUser: (user) =>
-    dispatch({
-      type: "UNSET_USER",
-    }),
-});
-
-const AsideMenu = (props) => {
-  const {
-    isLoading,
-    isAuthenticated,
-    error,
-    user,
-    loginWithRedirect,
-    logout,
-  } = useAuth0();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      const loginUser = {
-        name: user.nickname,
-        id: user.sub,
-        picture: user.picture,
-      };
-      props.setUser(loginUser);
-    }
-  }, [isAuthenticated]);
-
-  const loginButton = () => {
-    if (isLoading) {
-      return <div>Loading...</div>;
-    }
-    if (error) {
-      return <div>Oops... {error.message}</div>;
-    }
-    if (isAuthenticated) {
-      return (
-        <div>
-          Hello {user.nickname}{" "}
-          <img
-            src={user.picture}
-            alt="profile-pic"
-            style={{ height: "2rem" }}
-          />
-          <button
-            className="login-button-index mt-3"
-            onClick={() => {
-              props.unsetUser();
-              logout({ returnTo: window.location.origin });
-            }}
-          >
-            Logout
-          </button>
-        </div>
-      );
-    } else {
-      return (
-        <button className="login-button-index" onClick={loginWithRedirect}>
-          Login
-        </button>
-      );
-    }
-  };
+const AsideMenu = () => {
   return (
     <aside>
       <div styles={{ width: "80%", padding: "1rem" }}>
@@ -118,17 +47,19 @@ const AsideMenu = (props) => {
         </div>
 
         <div className="stick-to-bottom-index-page">
-          {/* <Link to="/login">
+          <Link to="/login">
             <div className="login-button-index">
               <span>SIGN UP</span>
             </div>
           </Link>
-          <Link to="/login">
-            <div className="login-button-index">
-              <span>LOGIN</span>
-            </div>
-          </Link> */}
-          <div>{loginButton()}</div>
+        </div>
+      </div>
+      <div className="menu d-flex column justify-content-start align-items-center">
+        <div className="col">
+          <Link to="/playList">
+            {" "}
+            <FontAwesomeIcon icon={faBook} className="mr-2" /> Your library
+          </Link>
           <div className="install-btn">
             <a href="#">
               <FontAwesomeIcon icon={faArrowCircleDown} /> Install
@@ -140,4 +71,4 @@ const AsideMenu = (props) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AsideMenu);
+export default AsideMenu;

@@ -1,15 +1,53 @@
 import React, { Component } from "react";
 import "../../styles/albums.css";
-import { BsFillPlayFill, BsHeart, BsThreeDots, BsClock} from "react-icons/bs";
-import {AiFillPlayCircle} from 'react-icons/ai';
-import { Spinner, Row, Col } from "react-bootstrap";
+import { BsFillPlayFill, BsHeart, BsThreeDots, BsClock } from "react-icons/bs";
+import { AiFillPlayCircle } from "react-icons/ai";
+import { Spinner, Row, Col, Button, Modal, Form } from "react-bootstrap";
 import { ColorExtractor } from "react-color-extractor";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  addToPlayList: (payload) =>
+    dispatch({ type: "ADD_SONG_TO_PLAYLIST", payload }),
+});
 
 class AlbumPlaylist extends Component {
   state = {
     album: "",
     loading: "true",
-    colors: []
+    colors: [],
+    show: false,
+    selectedPlaylist: this.props.playlists[0].name,
+    selectedSong: "",
+  };
+
+  handleClose = () => this.setState({ show: false });
+  handleShow = () => this.setState({ show: true });
+
+  handleAddToPlaylist = (id) => {
+    if (this.props.playlists.length === 0) {
+      this.props.history.push("/playList");
+    } else {
+      this.handleShow();
+      this.setState({ selectedSong: id });
+    }
+  };
+
+  handlePlaylistSelect = (e) => {
+    console.log(e.target.value);
+    this.setState({ selectedPlaylist: e.target.value });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const payload = {
+      name: this.state.selectedPlaylist,
+      song: this.state.selectedSong,
+    };
+    this.props.addToPlayList(payload);
   };
 
   componentDidMount = () => {
@@ -48,15 +86,15 @@ class AlbumPlaylist extends Component {
   };
 
   playlist = {
-      background: `linear-gradient(
+    background: `linear-gradient(
         0deg,
         rgba(18, 18, 18, 1) 0%,
         rgba(18, 18, 18, 0.9752275910364145) 36%,
         rgba(18, 18, 18, 0.9192051820728291) 84%,
         ${this.state.colors[3]} 100%
       )`,
-      padding: '20px 40px'
-  }
+    padding: "20px 40px",
+  };
 
   getColors = (colors) => {
     this.setState((state) => ({ colors: [...state.colors, ...colors] }));
@@ -65,118 +103,171 @@ class AlbumPlaylist extends Component {
   render() {
     return (
       <>
-
-      <ColorExtractor getColors={this.getColors}>
+        <ColorExtractor getColors={this.getColors}>
           <img src={this.state.album.cover_big} style={{ display: "none" }} />
         </ColorExtractor>
         {console.log("PLAYLIST COLORS:::::::", this.state.colors)}
 
-
-      <div style={{
-        background: `linear-gradient(
+        <div
+          style={{
+            background: `linear-gradient(
           0deg,
           rgba(18, 18, 18, 1) 0%,
           rgba(18, 18, 18, 0.9752275910364145) 36%,
           rgba(18, 18, 18, 0.9192051820728291) 84%,
           ${this.state.colors[3]} 100%
         )`,
-        padding: '20px 40px'
-    }}>
-        <div className="playlist-btns mb-3">
-          <AiFillPlayCircle className="play_btn"/>
-          <BsHeart className="heart-dots"/>
-          <BsThreeDots className="heart-dots"/>
-        </div>
-        <div className="playlist-table">
-          <table className="table table-borderless">
-            <thead>
-              <tr>
-                <th scope="col th-sm">
-                  <span># </span>
-                </th>
-                <th scope="col th-lg" style={{ paddingLeft: "50px" }}>
-                  Track Title
-                </th>
-                <th scope="col th-sm">
-                  Rank
-                </th>
-                <th scope="col th-sm">
-                  <BsClock/>
-                </th>
-                {/*<div
+            padding: "20px 40px",
+          }}
+        >
+          <div className="playlist-btns mb-3">
+            <AiFillPlayCircle className="play_btn" />
+            <BsHeart className="heart-dots" />
+            <BsThreeDots className="heart-dots" />
+          </div>
+          <div className="playlist-table">
+            <table className="table table-borderless">
+              <thead>
+                <tr>
+                  <th scope="col th-sm">
+                    <span># </span>
+                  </th>
+                  <th scope="col th-lg" style={{ paddingLeft: "50px" }}>
+                    Track Title
+                  </th>
+                  <th scope="col th-sm">Rank</th>
+                  <th scope="col th-sm">
+                    <BsClock />
+                  </th>
+                  {/*<div
                  // style={{ borderBottom: "1px solid #b3b3b3", width: "90%" }}
                 ></div>*/}
-              </tr>
-            </thead>
-            
-            <tbody>
-              {this.state.loading ? (
-                <Spinner animation="grow" variant="light" className="mt-3 albums-spinner"/>
-              ) : (
-                this.state.album.tracks.data.map((track, key) => (
-                  <tr onclick="printInnerText(this)">
-                    <th
-                      scope="row"
-                      style={{
-                        verticalAlign: "middle",
-                        minWidth: "30px",
-                        maxWidth: "30px",
-                      }}
-                    >
-                      <span
-                        className="track-num"
-                        style={{ width: "30px !important" }}
+                </tr>
+              </thead>
+
+              <tbody>
+                {this.state.loading ? (
+                  <Spinner
+                    animation="grow"
+                    variant="light"
+                    className="mt-3 albums-spinner"
+                  />
+                ) : (
+                  this.state.album.tracks.data.map((track, key) => (
+                    <tr onclick="printInnerText(this)">
+                      <th
+                        scope="row"
+                        style={{
+                          verticalAlign: "middle",
+                          minWidth: "30px",
+                          maxWidth: "30px",
+                        }}
                       >
-                        {key+1}{" "}
-                      </span>
-                      <BsFillPlayFill
-                        onclick="printInnerText()"
-                        className="track-play play-track-btn"
-                      />
-                    </th>
-                    <td>
-                      <ul>
-                        <li className="song">{track.title}</li>
-                        <li
-                          className="group"
-                          style={{ verticalAlign: "middle" }}
+                        <span
+                          className="track-num"
+                          style={{ width: "30px !important" }}
                         >
-                          {track.artist.name}
-                        </li>
-                      </ul>
-                    </td>
-                    <td style={{ verticalAlign: "middle" }}>
-                      <p className='group'>
-                        {track.rank}
-                      </p>
-                    </td>
-                    <td style={{ verticalAlign: "middle" }}>
-                      <img
-                        src="https://img.icons8.com/ios/15/b3b3b3/like.png"
-                        className="track-heart"
-                      />
-                      <p className="group">{this.toMinutes(track.duration)}</p>
-                      <img
-                        src="https://img.icons8.com/material/15/b3b3b3/more--v1.png"
-                        className="track-dots"
-                      />
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                          {key + 1}{" "}
+                        </span>
+                        <BsFillPlayFill
+                          onclick="printInnerText()"
+                          className="track-play play-track-btn"
+                        />
+                      </th>
+                      <td>
+                        <ul>
+                          <li className="song">{track.title}</li>
+                          <li
+                            className="group"
+                            style={{ verticalAlign: "middle" }}
+                          >
+                            {track.artist.name}
+                          </li>
+                        </ul>
+                      </td>
+                      <td>
+                        <Button
+                          onClick={() => this.handleAddToPlaylist(track.id)}
+                        >
+                          Add To Playlist
+                        </Button>
+                      </td>
+                      <td style={{ verticalAlign: "middle" }}>
+                        <p className="group">{track.rank}</p>
+                      </td>
+                      <td style={{ verticalAlign: "middle" }}>
+                        <img
+                          src="https://img.icons8.com/ios/15/b3b3b3/like.png"
+                          className="track-heart"
+                        />
+                        <p className="group">
+                          {this.toMinutes(track.duration)}
+                        </p>
+                        <img
+                          src="https://img.icons8.com/material/15/b3b3b3/more--v1.png"
+                          className="track-dots"
+                        />
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+            <div style={{ position: "absolute" }}>
+              <Modal
+                centered
+                show={this.state.show}
+                onHide={() => this.handleClose()}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Add Playlist</Modal.Title>
+                </Modal.Header>
+                <Form onSubmit={(e) => this.handleSubmit(e)}>
+                  <Modal.Body>
+                    <Form.Group controlId="exampleForm.ControlSelect1">
+                      <Form.Label>Select Playlist</Form.Label>
+                      <Form.Control
+                        as="select"
+                        onChange={(e) => this.handlePlaylistSelect(e)}
+                      >
+                        {this.props.playlists.length > 0 &&
+                          this.props.playlists.map((playlist) => (
+                            <option>{playlist.name}</option>
+                          ))}
+                      </Form.Control>
+                    </Form.Group>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      variant="secondary"
+                      onClick={() => this.handleClose()}
+                    >
+                      Close
+                    </Button>
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      onClick={() => this.handleClose()}
+                    >
+                      Add to playlist
+                    </Button>
+                  </Modal.Footer>
+                </Form>
+              </Modal>
+            </div>
+          </div>
+          <p className="playlist-footer">
+            &copy 2018 Queen Productions Ltd, under exclusive licence to
+            Universal International Music BV
+            <br />℗ A Virgin Records Release; This Compilation ℗ 2018 Queen
+            Productions Ltd, under exclusive licence to Universal International
+            Music BV
+          </p>
         </div>
-        <p className="playlist-footer">
-          &copy 2018 Queen Productions Ltd, under exclusive licence to Universal
-          International Music BV
-          <br />℗ A Virgin Records Release; This Compilation ℗ 2018 Queen
-          Productions Ltd, under exclusive licence to Universal International
-          Music BV
-        </p>
-      </div>
       </>
     );
   }
 }
-export default AlbumPlaylist;
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(AlbumPlaylist)
+);

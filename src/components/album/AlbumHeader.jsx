@@ -5,6 +5,9 @@ import { AiOutlineUser, AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { BsChevronDown } from "react-icons/bs";
 import { Nav, NavDropdown, MenuItem } from "react-bootstrap";
 import { ColorExtractor } from "react-color-extractor";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => state;
 
 class AlbumHeader extends Component {
   state = {
@@ -39,7 +42,7 @@ class AlbumHeader extends Component {
   getColors = (colors) => {
     this.setState((state) => ({ colors: [...state.colors, ...colors] }));
   };
-  
+
   render() {
     return (
       <>
@@ -69,7 +72,13 @@ class AlbumHeader extends Component {
               </button>
             </a>
 
-            <Nav style={{ marginTop: "-0.5em", paddingLeft: '0px', paddingRight: '0px' }}>
+            <Nav
+              style={{
+                marginTop: "-0.5em",
+                paddingLeft: "0px",
+                paddingRight: "0px",
+              }}
+            >
               <NavDropdown
                 eventkey={1}
                 title={
@@ -80,12 +89,20 @@ class AlbumHeader extends Component {
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
-                    style={{paddingLeft: '10px', paddingRight: '10px'}}
+                    style={{ paddingLeft: "10px", paddingRight: "10px" }}
                   >
-                    <span className="user-icon">
-                      <AiOutlineUser style={{ fontSize: "1.5em" }} />
+                    <span>
+                      {/* <AiOutlineUser style={{ fontSize: "1.5em" }} /> */}
+                      {this.props.user.picture && (
+                        <img
+                          src={this.props.user.picture}
+                          alt="profile pic"
+                          style={{ height: "1.2rem", borderRadius: "50%" }}
+                          className="mr-2"
+                        />
+                      )}
                     </span>
-                    Drita
+                    {this.props.user.name || "Login to add fav"}
                     <BsChevronDown className="ml-1 mr-1" />
                   </button>
                 }
@@ -125,4 +142,4 @@ class AlbumHeader extends Component {
     );
   }
 }
-export default AlbumHeader;
+export default connect(mapStateToProps)(AlbumHeader);

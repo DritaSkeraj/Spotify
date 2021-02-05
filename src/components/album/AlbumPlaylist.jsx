@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../styles/albums.css";
 import { BsFillPlayFill, BsHeart, BsThreeDots, BsClock } from "react-icons/bs";
-import { AiFillPlayCircle } from "react-icons/ai";
+import { AiFillPlayCircle, AiOutlinePlusSquare } from "react-icons/ai";
 import { Spinner, Row, Col, Button, Modal, Form } from "react-bootstrap";
 import { ColorExtractor } from "react-color-extractor";
 import { connect } from "react-redux";
@@ -205,11 +205,9 @@ class AlbumPlaylist extends Component {
                         </ul>
                       </td>
                       <td>
-                        <Button
+                        <AiOutlinePlusSquare
                           onClick={() => this.handleAddToPlaylist(track.id)}
-                        >
-                          Add To Playlist
-                        </Button>
+                          style={{'marginTop': '1em'}}/>
                       </td>
                       <td style={{ verticalAlign: "middle" }}>
                         <p className="group">{track.rank}</p>

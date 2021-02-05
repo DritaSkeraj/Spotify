@@ -4,20 +4,8 @@ import { BsFillPlayFill, BsHeart, BsThreeDots, BsClock} from "react-icons/bs";
 import {AiFillPlayCircle} from 'react-icons/ai';
 import { Spinner, Row, Col } from "react-bootstrap";
 import { ColorExtractor } from "react-color-extractor";
-import {connect} from 'react-redux';
-
-const mapStateToProps = (state) => state;
-
-const mapDispachToProps = (dispach) => ({
-  play: (song) => 
-    dispach({
-      type: "PLAY",
-      payload: song,
-    })
-})
 
 class AlbumPlaylist extends Component {
-  
   state = {
     album: "",
     loading: "true",
@@ -46,10 +34,6 @@ class AlbumPlaylist extends Component {
         this.setState({ album: fetchedAlbum, loading: false })
       );
   };
-
-  handlePlay = (song) => {
-    this.props.play(song);
-  }
 
   toMinutes = (d) => {
     d = Number(d);
@@ -85,6 +69,8 @@ class AlbumPlaylist extends Component {
       <ColorExtractor getColors={this.getColors}>
           <img src={this.state.album.cover_big} style={{ display: "none" }} />
         </ColorExtractor>
+        {console.log("PLAYLIST COLORS:::::::", this.state.colors)}
+
 
       <div style={{
         background: `linear-gradient(
@@ -144,7 +130,7 @@ class AlbumPlaylist extends Component {
                         {key+1}{" "}
                       </span>
                       <BsFillPlayFill
-                        onClick = { () => this.handlePlay(track)}
+                        onclick="printInnerText()"
                         className="track-play play-track-btn"
                       />
                     </th>
@@ -193,4 +179,4 @@ class AlbumPlaylist extends Component {
     );
   }
 }
-export default connect(mapStateToProps, mapDispachToProps)(AlbumPlaylist);
+export default AlbumPlaylist;

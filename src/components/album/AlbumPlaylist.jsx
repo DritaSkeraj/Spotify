@@ -34,7 +34,7 @@ class AlbumPlaylist extends Component {
   handleShow = () => this.setState({ show: true });
 
   handleAddToPlaylist = (id) => {
-    if (this.props.playlists.length === 0) {
+    if (this.props.playlists.present.length === 0) {
       this.props.history.push("/playList");
     } else {
       this.handleShow();
@@ -62,8 +62,8 @@ class AlbumPlaylist extends Component {
 
   componentDidMount = () => {
     this.fetchAlbum(this.props.albumId);
-    if (this.props.playlists.length > 0) {
-      this.setState({ selectedPlaylist: this.props.playlists[0].name });
+    if (this.props.playlists.present.length > 0) {
+      this.setState({ selectedPlaylist: this.props.playlists.present[0].name });
     }
   };
 
@@ -251,8 +251,8 @@ class AlbumPlaylist extends Component {
                         as="select"
                         onChange={(e) => this.handlePlaylistSelect(e)}
                       >
-                        {this.props.playlists.length > 0 &&
-                          this.props.playlists.map((playlist) => (
+                        {this.props.playlists.present.length > 0 &&
+                          this.props.playlists.present.map((playlist) => (
                             <option>{playlist.name}</option>
                           ))}
                       </Form.Control>

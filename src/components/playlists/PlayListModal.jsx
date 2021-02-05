@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import { Modal, Button, Spinner } from "react-bootstrap";
 import { BsClock, BsFillPlayFill } from "react-icons/bs";
 import { connect } from "react-redux";
-
-const mapStateToProps = (state) => state;
+import { ActionCreators as UndoActionCreators } from "redux-undo";
+const mapStateToProps = (state) => {
+  return { ...state, canUndo: state.playlists.past.length > 0 };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   removeFromPlaylist: (payload) =>
     dispatch({ type: "REMOVE_SONG_FROM_PLAYLIST", payload }),
+  onUndo: () => dispatch(UndoActionCreators.undo()),
 });
 
 class PlayListModal extends Component {
@@ -23,7 +26,7 @@ class PlayListModal extends Component {
         this.fetchSongs();
       }
     }
-    if (this.props.playlists !== prevProps.playlists) {
+    if (this.props.playlists.present !== prevProps.playlists.present) {
       if (this.props.selectedPlaylist) {
         this.fetchSongs();
       }
@@ -32,7 +35,7 @@ class PlayListModal extends Component {
 
   fetchSongs = () => {
     this.setState({ songs: [] });
-    let playlist = this.props.playlists.find(
+    let playlist = this.props.playlists.present.find(
       (playlist) => playlist.name === this.props.selectedPlaylist.name
     );
     if (playlist !== undefined) {
@@ -94,6 +97,12 @@ class PlayListModal extends Component {
             <Modal.Header closeButton>
               <Modal.Title>
                 {this.props.selectedPlaylist.name} Playlist
+                <Button
+                  onClick={() => this.props.onUndo()}
+                  disabled={!this.props.canUndo}
+                >
+                  Undo
+                </Button>
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>

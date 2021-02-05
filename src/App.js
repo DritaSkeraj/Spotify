@@ -15,7 +15,6 @@ import PlayList from "./components/playlists/PlayList";
 function App() {
   return (
     <Router>
-<<<<<<< HEAD
       <Route path="/login" exact component={Login} />
       <Route path="/" exact component={AsideMenu} />
       <Route path="/" exact component={Player} />
@@ -24,15 +23,7 @@ function App() {
       <Route path="/artistPage/:artist" exact component={ArtistPage} />
       <Route path="/search" exact component={SearchPage} />
       <Route path="/playList" exact component={PlayList} />
-=======
-        <Route path='/login' exact component={Login} />
-        <Route path='/' exact component={AsideMenu} />
-        <Route path='/' exact component={Player} />
-        <Route path='/' exact component={HomeContent} />
-        <Route path='/albumPage/:album' exact component={AlbumPage} />
-        <Route path='/artistPage/:artist' exact component={ArtistPage} />
-        <Route path='/search' exact component={SearchPage} />
->>>>>>> lidia-backup
+
     </Router>
   );
 }

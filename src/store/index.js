@@ -15,9 +15,11 @@ const initialState = {
     id: null,
     picture: null,
   },
+  nowPlaying: null,
+
 };
 
-const bigReducer = combineReducers({ fav: favReducer, user: userReducer }); //associates reducers to state values
+const bigReducer = combineReducers({ fav: favReducer, user: userReducer, newPlaying: playerReducer }); //associates reducers to state values
 
 export default function configureStore() {
   return createStore(

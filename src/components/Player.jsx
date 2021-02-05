@@ -38,7 +38,6 @@ class Player extends React.Component {
     img: 'https://e-cdns-images.dzcdn.net/images/artist/0b17b99897d17ceb7027ed57cdbb7044/56x56-000000-80-0-0.jpg',
     song: 'Bohemian Rhapsody',
     artist: 'Queen'
-    playing: {}
   }
   componentDidUpdate(prevProps){
     console.log('player props:::::::::::::::::::::prevProps:', prevProps.newPlaying, ' newProps:', this.props.newPlaying)
@@ -55,12 +54,10 @@ class Player extends React.Component {
       <>
         <section
           className="player d-flex justify-content-between"
-          style={{ width: "100%", position: "fixed" }}
-        >
-//////////////////
+          style={{ width: "100%", position: "fixed" }}>
+
         <div
-          className="player-albumart d-flex align-items-center justify-content-start"
-        >
+          className="player-albumart d-flex align-items-center justify-content-start">
           <div className="nowplaying-albumart mx-3">
             <img src={this.props.newPlaying.cover_small ? this.props.newPlaying.cover_small : this.state.img}
              style={{width: '64px', height: '64px'}}/>
@@ -76,54 +73,8 @@ class Player extends React.Component {
         </div>
   
         <div className="d-flex flex-column py-2 my-1 flex-grow-1">
-          <div className="player-btn d-flex align-items-center justify-content-center player-controller my-1 py-1">
-            <FontAwesomeIcon icon={faRandom} className="d-none d-md-flex mx-3"/>
-            <FontAwesomeIcon icon={faStepBackward} className="mx-3"/> 
-            <div className="fa-lg">
-              <FontAwesomeIcon icon={faPlay} className='mx-3'/>
-          ///////////////////
-          <div className="player-albumart d-flex align-items-center justify-content-start">
-            <div className="nowplaying-albumart mx-3">
-              <img
-                src={imgPlaceholder}
-                style={{ width: "64px", height: "64px" }}
-              />
-            </div>
-            <div className="d-none d-sm-flex flex-column text-left mr-4">
-              <div className="nowplaying-title">Now playing title</div>
-              <div className="nowplaying-artist">Now playing artist</div>
-              ///////////////////
-            </div>
-            {/* <div className="d-none d-lg-flex loved-track mr-3">
-        <FontAwesomeIcon icon={faHeart} />
-      </div> */}
-            {this.state.playing && (this.state[this.props.newPlaying.id] === true ?  (
-              <div
-                className="like-icon"
-                onClick={() => {
-                  this.props.removeFromFav(this.props.newPlaying);
-                  this.setState({ [this.props.newPlaying.id]: false });
-                }}
-              >
-                <IoIosHeart className="heart" />
-              </div>
-            ) : (
-              <div
-                className="like-icon"
-                onClick={() => {
-                  this.props.addToFav(this.props.newPlaying);
-                  this.setState({ [this.props.newPlaying.id]: true });
-                }}
-              >
-                <IoIosHeartEmpty className="heart" />
-              </div>
-            ))}
-            <FontAwesomeIcon
-              icon={faChalkboard}
-              className="d-none d-lg-block"
-            />
           </div>
-
+          {/*******************/}
           <div className="d-flex flex-column py-2 my-1 flex-grow-1">
             <div className="player-btn d-flex align-items-center justify-content-center player-controller my-1 py-1">
               <FontAwesomeIcon

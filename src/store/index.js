@@ -4,6 +4,7 @@ import userReducer from "../reducer/user";
 import thunk from "redux-thunk";
 import playListReducer from "../reducer/playlists";
 import selectedPlaylistReducer from "../reducer/selectedPlaylist";
+import nowPlayingReducer from "../reducer/nowPlaying";
 
 const composedEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -19,6 +20,7 @@ const initialState = {
   },
   playlists: [],
   selectedPlaylist: {},
+  nowPlaying: {},
 };
 
 const bigReducer = combineReducers({
@@ -26,6 +28,7 @@ const bigReducer = combineReducers({
   user: userReducer,
   playlists: playListReducer,
   selectedPlaylist: selectedPlaylistReducer,
+  nowPlaying: nowPlayingReducer,
 }); //associates reducers to state values
 
 export default function configureStore() {

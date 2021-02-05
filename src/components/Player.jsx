@@ -39,7 +39,7 @@ class Player extends React.Component {
   };
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props)
-      this.setState({ playing: this.props.newPlaying.id }, () =>
+      this.setState({ playing: this.props.nowPlaying.id }, () =>
         console.log(this.state.playing)
       );
   }
@@ -65,12 +65,12 @@ class Player extends React.Component {
         <FontAwesomeIcon icon={faHeart} />
       </div> */}
             {this.state.playing &&
-              (this.state[this.props.newPlaying.id] === true ? (
+              (this.state[this.props.nowPlaying.id] === true ? (
                 <div
                   className="like-icon"
                   onClick={() => {
-                    this.props.removeFromFav(this.props.newPlaying);
-                    this.setState({ [this.props.newPlaying.id]: false });
+                    this.props.removeFromFav(this.props.nowPlaying);
+                    this.setState({ [this.props.nowPlaying.id]: false });
                   }}
                 >
                   <IoIosHeart className="heart" />
@@ -79,8 +79,8 @@ class Player extends React.Component {
                 <div
                   className="like-icon"
                   onClick={() => {
-                    this.props.addToFav(this.props.newPlaying);
-                    this.setState({ [this.props.newPlaying.id]: true });
+                    this.props.addToFav(this.props.nowPlaying);
+                    this.setState({ [this.props.nowPlaying.id]: true });
                   }}
                 >
                   <IoIosHeartEmpty className="heart" />

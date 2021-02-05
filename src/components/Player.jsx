@@ -36,11 +36,12 @@ class Player extends React.Component {
           className="player-albumart d-flex align-items-center justify-content-start"
         >
           <div className="nowplaying-albumart mx-3">
-            <img src={this.state.img} style={{width: '64px', height: '64px'}}/>
+            <img src={this.props.newPlaying.cover_small ? this.props.newPlaying.cover_small : this.state.img}
+             style={{width: '64px', height: '64px'}}/>
           </div>
           <div className="d-none d-sm-flex flex-column text-left mr-4">
             <div className="nowplaying-title">{this.props.newPlaying.title_short ? this.props.newPlaying.title_short : this.state.song}</div>
-            <div className="nowplaying-artist">{this.state.artist}</div>
+            <div className="nowplaying-artist">{this.props.newPlaying.name}</div>
           </div>
           <div className="d-none d-lg-flex loved-track mr-3">
             <FontAwesomeIcon icon={faHeart} />

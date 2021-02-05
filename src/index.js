@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { Provider } from "react-redux";
+import configureStore from "./store";
 
 ReactDOM.render(
   <Auth0Provider
@@ -11,7 +13,9 @@ ReactDOM.render(
     clientId="mAsBMluX3wAs2duuPHpJz808dH2dMmEw"
     redirectUri={window.location.origin}
   >
-    <App />
+    <Provider store={configureStore()}>
+      <App />
+    </Provider>
   </Auth0Provider>,
   document.getElementById("root")
 );

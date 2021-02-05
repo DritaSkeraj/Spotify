@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -10,8 +10,23 @@ import "../styles/styles.css";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { connect } from "react-redux";
 
-const AsideMenu = () => {
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  setUser: (user) =>
+    dispatch({
+      type: "SET_USER",
+      payload: user,
+    }),
+  unsetUser: (user) =>
+    dispatch({
+      type: "UNSET_USER",
+    }),
+});
+
+const AsideMenu = (props) => {
   const {
     isLoading,
     isAuthenticated,
@@ -21,6 +36,17 @@ const AsideMenu = () => {
     logout,
   } = useAuth0();
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      const loginUser = {
+        name: user.nickname,
+        id: user.sub,
+        picture: user.picture,
+      };
+      props.setUser(loginUser);
+    }
+  }, [isAuthenticated]);
+
   const loginButton = () => {
     if (isLoading) {
       return <div>Loading...</div>;
@@ -28,7 +54,6 @@ const AsideMenu = () => {
     if (error) {
       return <div>Oops... {error.message}</div>;
     }
-
     if (isAuthenticated) {
       return (
         <div>
@@ -40,7 +65,10 @@ const AsideMenu = () => {
           />
           <button
             className="login-button-index mt-3"
-            onClick={() => logout({ returnTo: window.location.origin })}
+            onClick={() => {
+              props.unsetUser();
+              logout({ returnTo: window.location.origin });
+            }}
           >
             Logout
           </button>
@@ -112,4 +140,4 @@ const AsideMenu = () => {
   );
 };
 
-export default AsideMenu;
+export default connect(mapStateToProps, mapDispatchToProps)(AsideMenu);

@@ -13,7 +13,7 @@ import {Link} from 'react-router-dom';
 
 class HomeContent extends React.Component {
   state = {
-    artists: ["pink floyd", "eric clapton", "linkin park", "arctic monkeys", "sting", "system of a down"],
+    artists: ["pink floyd", "eric clapton", "linkin park", "imagine dragons", "arctic monkeys", "sting", "system of a down"],
     albums: [],
     error: "",
     loading: true,
@@ -81,7 +81,7 @@ class HomeContent extends React.Component {
                   <Row>
                     {category.data.map((album, key) => (
                       <Link to={`/albumPage/${album.album.id}`}>
-                        <SingleSong image={album.album.cover} title={album.title}/>
+                        <SingleSong image={album.album.cover} title={album.title} song={album}/>
                       </Link>
                     ))}
                   </Row>

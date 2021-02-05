@@ -1,19 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import {BrowserRouter as Router} from 'react-router-dom';
-import {Provider} from 'react-redux';
-import configureStore from './store';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { Auth0Provider } from "@auth0/auth0-react";
+import { Provider } from "react-redux";
+import configureStore from "./store";
 
 ReactDOM.render(
-  <Provider store={configureStore()}>
-  <Router>
-    <App />
-  </Router>
-  </Provider>,
-  document.getElementById('root')
+  <Auth0Provider
+    domain="dev-9avl7a17.eu.auth0.com"
+    clientId="mAsBMluX3wAs2duuPHpJz808dH2dMmEw"
+    redirectUri={window.location.origin}
+  >
+    <Provider store={configureStore()}>
+      <App />
+    </Provider>
+  </Auth0Provider>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

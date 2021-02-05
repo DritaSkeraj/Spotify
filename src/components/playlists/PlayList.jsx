@@ -30,7 +30,6 @@ class PlayList extends Component {
     this.setState({ playListModal: false });
   };
   handlePlayListShow = (e) => {
-    console.log(e.currentTarget.id);
     this.props.setPlayList(e.currentTarget.id);
     this.setState({
       playListModal: true,

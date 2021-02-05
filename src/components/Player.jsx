@@ -90,11 +90,13 @@ class Player extends React.Component {
               </div>
             </div>
             {this.state.playing &&
-              (this.state[this.props.nowPlaying.id] === true ? (
+              (this.props.fav.data.find(
+                (fa) => fa === this.props.nowPlaying.title_short
+              ) !== undefined ? (
                 <div
                   className="like-icon"
                   onClick={() => {
-                    this.props.removeFromFav(this.props.nowPlaying);
+                    this.props.removeFromFav(this.props.nowPlaying.title_short);
                     this.setState({ [this.props.nowPlaying.id]: false });
                   }}
                 >
@@ -104,7 +106,7 @@ class Player extends React.Component {
                 <div
                   className="like-icon"
                   onClick={() => {
-                    this.props.addToFav(this.props.nowPlaying);
+                    this.props.addToFav(this.props.nowPlaying.title_short);
                     this.setState({ [this.props.nowPlaying.id]: true });
                   }}
                 >

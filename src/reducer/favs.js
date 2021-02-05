@@ -9,7 +9,7 @@ export default function (state = {}, action) {
     case "REMOVE_SONG_FROM_FAV":
       return {
         ...state,
-        data: [...state.data.filter((song) => song.id !== action.payload.id)],
+        data: [...state.data.filter((song) => song !== action.payload)],
       };
     default:
       return state;

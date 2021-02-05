@@ -11,17 +11,16 @@ const mapStateToProps = (state) => state;
 class Player extends React.Component {
 
   state = {
-    img: 'https://e-cdns-images.dzcdn.net/images/artist/0b17b99897d17ceb7027ed57cdbb7044/56x56-000000-80-0-0.jpg',
+    img: 'imgPlaceholder',
     song: 'Bohemian Rhapsody',
     artist: 'Queen'
   }
 
   componentDidUpdate(prevProps){
-    console.log('player props:::::::::::::::::::::prevProps:', prevProps, ' newProps:', this.props)
-    if(prevProps.newPlaying.id !== this.props.newPlaying.id){
+    if(prevProps.newPlaying !== this.props.newPlaying){
       this.setState({img: this.props.newPlaying.artist.picture_small,
-                    song: 'Show must go on',
-                    artist: 'fredy' })
+                    song: this.props.newPlaying.title_short,
+                    artist: this.props.newPlaying.artist.name })
     }
   }
 
@@ -39,7 +38,7 @@ class Player extends React.Component {
             <img src={this.state.img} style={{width: '64px', height: '64px'}}/>
           </div>
           <div className="d-none d-sm-flex flex-column text-left mr-4">
-            <div className="nowplaying-title">{this.props.newPlaying.title_short ? this.props.newPlaying.title_short : this.state.song}</div>
+            <div className="nowplaying-title">{this.state.song}</div>
             <div className="nowplaying-artist">{this.state.artist}</div>
           </div>
           <div className="d-none d-lg-flex loved-track mr-3">

@@ -1,6 +1,7 @@
 import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import favReducer from "../reducer/favs";
 import userReducer from "../reducer/user";
+import playerReducer from '../reducer/nowPlaying'
 import thunk from "redux-thunk";
 
 const composedEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

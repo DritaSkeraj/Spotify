@@ -17,11 +17,11 @@ class Player extends React.Component {
   }
 
   componentDidUpdate(prevProps){
-    console.log('player props:::::::::::::::::::::prevProps:', prevProps, ' newProps:', this.props)
+    console.log('player props:::::::::::::::::::::prevProps:', prevProps.newPlaying, ' newProps:', this.props.newPlaying)
     if(prevProps.newPlaying.id !== this.props.newPlaying.id){
-      this.setState({img: this.props.newPlaying.artist.picture_small,
-                    song: 'Show must go on',
-                    artist: 'fredy' })
+      this.setState({img: this.props.newPlaying.artist.picture_small ? this.props.newPlaying.artist.picture_small : 'http://placehold.it/60x60',
+                    song: '',
+                    artist: this.props.newPlaying.artist.name })
     }
   }
 

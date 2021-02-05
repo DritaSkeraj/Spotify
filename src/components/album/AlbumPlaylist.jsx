@@ -26,7 +26,7 @@ class AlbumPlaylist extends Component {
     loading: "true",
     colors: [],
     show: false,
-    selectedPlaylist: this.props.playlists[0].name,
+    selectedPlaylist: null,
     selectedSong: "",
   };
 
@@ -62,6 +62,9 @@ class AlbumPlaylist extends Component {
 
   componentDidMount = () => {
     this.fetchAlbum(this.props.albumId);
+    if (this.props.playlists > 0) {
+      this.setState({ selectedPlaylist: this.props.playlists[0].name });
+    }
   };
 
   fetchAlbum = (id) => {

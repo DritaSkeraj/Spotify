@@ -4,9 +4,27 @@ import { faHeart, faChalkboard, faRandom, faStepBackward, faPlay, faStepForward,
         from '@fortawesome/free-solid-svg-icons'
 import '../styles/styles.css';
 import imgPlaceholder from '../assets/bohemian-rhapsody.jpg';
+import {connect} from 'react-redux';
 
-const Player = () => {
+const mapStateToProps = (state) => state;
 
+class Player extends React.Component {
+
+  state = {
+    img: 'imgPlaceholder',
+    song: 'Bohemian Rhapsody',
+    artist: 'Queen'
+  }
+
+  componentDidUpdate(prevProps){
+    if(prevProps.newPlaying !== this.props.newPlaying){
+      this.setState({img: this.props.newPlaying.artist.picture_small,
+                    song: this.props.newPlaying.title_short,
+                    artist: this.props.newPlaying.artist.name })
+    }
+  }
+
+  render(){
     return(
         <>
         <section
@@ -17,11 +35,11 @@ const Player = () => {
           className="player-albumart d-flex align-items-center justify-content-start"
         >
           <div className="nowplaying-albumart mx-3">
-            <img src={imgPlaceholder} style={{width: '64px', height: '64px'}}/>
+            <img src={this.state.img} style={{width: '64px', height: '64px'}}/>
           </div>
           <div className="d-none d-sm-flex flex-column text-left mr-4">
-            <div className="nowplaying-title">Now playing title</div>
-            <div className="nowplaying-artist">Now playing artist</div>
+            <div className="nowplaying-title">{this.state.song}</div>
+            <div className="nowplaying-artist">{this.state.artist}</div>
           </div>
           <div className="d-none d-lg-flex loved-track mr-3">
             <FontAwesomeIcon icon={faHeart} />
@@ -59,7 +77,7 @@ const Player = () => {
       </section>
         </>
     );
-
+    }
 }
 
-export default Player;
+export default connect(mapStateToProps)(Player);

@@ -4,7 +4,7 @@ import AsideMenu from "../AsideMenu";
 import Player from "../Player";
 import { connect } from "react-redux";
 import PlayListModal from "./PlayListModal";
-import backgroundImg  from '../../assets/rock-concert.jpg';
+import backgroundImg from "../../assets/rock-concert.jpg";
 
 const mapStateToProps = (state) => state;
 
@@ -60,29 +60,35 @@ class PlayList extends Component {
             style={{ overflowY: "hidden !important" }}
           >
             <h1>Playlists</h1>
-            <div style={{'display': 'flex', 'flexDirections': 'row'}}>
-            {this.props.playlists.length > 0 &&
-              this.props.playlists.map((playlist) => (
-                <Card style={{ width: "10rem", 'backgroundColor': '#1b1b1b', 'color': '#eee'}}>
-                  <Card.Img
-                    id={playlist.name}
-                    variant="top"
-                    src={backgroundImg}
-                    onClick={(e) => this.handlePlayListShow(e)}
-                  />
-                  <Card.Body >
-                    <Card.Title>{playlist.name}</Card.Title>
-                  </Card.Body>
-                  <Button
-                    variant="danger"
-                    id={playlist.name}
-                    onClick={(e) => this.handleRemove(e)}
+            <div style={{ display: "flex", flexDirections: "row" }}>
+              {this.props.playlists.present.length > 0 &&
+                this.props.playlists.present.map((playlist) => (
+                  <Card
+                    style={{
+                      width: "10rem",
+                      backgroundColor: "#1b1b1b",
+                      color: "#eee",
+                    }}
                   >
-                    Delete
-                  </Button>
-                </Card>
-              ))}
-              </div>
+                    <Card.Img
+                      id={playlist.name}
+                      variant="top"
+                      src={backgroundImg}
+                      onClick={(e) => this.handlePlayListShow(e)}
+                    />
+                    <Card.Body>
+                      <Card.Title>{playlist.name}</Card.Title>
+                    </Card.Body>
+                    <Button
+                      variant="danger"
+                      id={playlist.name}
+                      onClick={(e) => this.handleRemove(e)}
+                    >
+                      Delete
+                    </Button>
+                  </Card>
+                ))}
+            </div>
             <Button onClick={() => this.handleShow()}>Create Playlist</Button>
             {/* ADD PLAYLIST MODAL */}
             <Modal

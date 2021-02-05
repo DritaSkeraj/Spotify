@@ -30,7 +30,6 @@ class PlayList extends Component {
     this.setState({ playListModal: false });
   };
   handlePlayListShow = (e) => {
-    console.log(e.currentTarget.id);
     this.props.setPlayList(e.currentTarget.id);
     this.setState({
       playListModal: true,
@@ -62,9 +61,8 @@ class PlayList extends Component {
             <h1>Playlists</h1>
             {this.props.playlists.length > 0 &&
               this.props.playlists.map((playlist) => (
-                <Card style={{ width: "10rem" }}>
+                <Card id={playlist.name} style={{ width: "10rem" }}>
                   <Card.Img
-                    id={playlist.name}
                     variant="top"
                     src="http://placehold.it/50x50"
                     onClick={(e) => this.handlePlayListShow(e)}

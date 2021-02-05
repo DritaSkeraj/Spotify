@@ -144,7 +144,7 @@ class AlbumPlaylist extends Component {
                         {key+1}{" "}
                       </span>
                       <BsFillPlayFill
-                        onClick = { () => this.handlePlay({...track, ...this.state.album, ...this.state.album.artist})}
+                        onClick = { () => this.handlePlay({...track, ...this.state.album})}
                         className="track-play play-track-btn"
                       />
                     </th>

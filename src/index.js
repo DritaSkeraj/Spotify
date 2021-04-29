@@ -9,9 +9,9 @@ import configureStore from "./store";
 
 ReactDOM.render(
   <Auth0Provider
-    domain="dev-9avl7a17.eu.auth0.com"
-    clientId="mAsBMluX3wAs2duuPHpJz808dH2dMmEw"
-    redirectUri="https://spotify-eight-mu.vercel.app/"
+    domain="dev-ruzhysn0.eu.auth0.com"
+    clientId="2KK7KEFFm2ndhdZKTKXXR7kEs8nAfhQB"
+    redirectUri="https://spotify-eight-mu.vercel.app"
     //redirectUri={window.location.origin}
   >
     <Provider store={configureStore()}>

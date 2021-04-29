@@ -11,7 +11,8 @@ ReactDOM.render(
   <Auth0Provider
     domain="dev-9avl7a17.eu.auth0.com"
     clientId="mAsBMluX3wAs2duuPHpJz808dH2dMmEw"
-    redirectUri={window.location.origin}
+    redirectUri="https://spotify-eight-mu.vercel.app/"
+    //redirectUri={window.location.origin}
   >
     <Provider store={configureStore()}>
       <App />

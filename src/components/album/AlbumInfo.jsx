@@ -14,7 +14,6 @@ class AlbumInfo extends Component {
 
   componentDidMount = () =>{
     this.fetchAlbum(this.props.albumId);
-    console.log('header mounted')
   }
 
   fetchAlbum = (id) => {
